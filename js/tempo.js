@@ -10,7 +10,7 @@ Autor: Éderson Cássio
 
 
 function Tempo(){
-  this.tempo_tick = 0;
+  this.tempo_tick = new Date().getTime();
   this.ultimo_segundo = this.tempo_tick / 1000;
   this.novo_segundo = false;
   this.tick();

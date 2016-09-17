@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Request Animation Frame</title>
+    <title>Teclado e Aceleração</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -12,7 +12,7 @@
   </head>
     <body>
       <div class="container">
-      <h1>Request Animation Frame</h1>
+      <h1>Teclado e Aceleração</h1>
           <div class="row">
             <div class="col-lg-6">
               <canvas id="canvas" width="500" height="500" style="border: 1px solid">
@@ -21,15 +21,15 @@
             </div>
             <div class="col-lg-5">
               <form id="controles" name="controles" class="form-horizontal">
-                <label for="velocidade_x" class="col-sm-2 control-label">Velocidade X / FP</label>
+                <label for="velocidade_max_x" class="col-sm-2 control-label">Velocidade Máxima X / FP</label>
                 <div class="col-lg-4 col-lg-offset-1">
-                  <input type="text" name="velocidade_x" id="velocidade_x"
+                  <input type="text" name="velocidade_max_x" id="velocidade_max_x"
                     class="form-control">
                 </div>
                 <div class="clearfix"></div>
-                <label for="velocidade_y" class="col-sm-2 control-label">Velocidade Y / FP</label>
+                <label for="velocidade_max_y" class="col-sm-2 control-label">Velocidade Máxima Y / FP</label>
                 <div class="col-lg-4 col-lg-offset-1">
-                  <input type="text" name="velocidade_y" id="velocidade_y"
+                  <input type="text" name="velocidade_max_y" id="velocidade_max_y"
                     class="form-control">
                 </div>
                 <div class="clearfix"></div>
@@ -53,6 +53,8 @@
               <div id="info">
                 <p>Frames segundo (máximo): <span id="frames_segundo_text"></span></p>
                 <p>Total Frames: <span id="total_frames"></span></p>
+                <p>Velocidade X: <span id="velocidade_x"></span></p>
+                <p>Velocidade Y: <span id="velocidade_y"></span></p>
               </div>
             </div>
           </div>
@@ -60,6 +62,7 @@
     </div>
       <script src="js/jquery-1.12.4.js"></script>
       <script src="js/bootstrap.js"></script>
+      <script src="js/teclado.js"></script>
       <script src="js/tempo.js"></script>
       <script src="js/animacao.js"></script>
       <script src="js/bola.js"></script>

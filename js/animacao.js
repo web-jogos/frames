@@ -14,6 +14,9 @@ function Animacao(context, elementos, frames_segundo){
   this.total_frames = 0;
   this.frames_segundo = frames_segundo;
   this.tempo = new Tempo();
+  for(var i in this.elementos){
+    this.elementos[i].animacao = this;
+  }
 };
 
 Animacao.prototype.ligar = function(){
@@ -37,6 +40,10 @@ Animacao.prototype.pausar = function(){
     this.ligar();
   }
 };
+
+Animacao.prototype.decorrido = function(){
+  return this.tempo.ultimo_tick();
+}
 
 Animacao.prototype.limparTela = function(){
   this.context.clearRect(0, 0, this.context.canvas.width,
