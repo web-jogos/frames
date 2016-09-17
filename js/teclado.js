@@ -26,13 +26,11 @@ function Teclado(elemento){
   var that = this;
   $(this.elemento).keydown(function(e){
     that.down[e.keyCode] = true;
-    console.debug("A tecla " + e.keyCode + " está apertada");
   });
 
   $(this.elemento).keyup(function(e){
     delete that.down[e.keyCode];
     delete that.pressionadas[e.keyCode];
-    console.debug("A tecla " + e.keyCode + " foi solta");
   });
 };
 

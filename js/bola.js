@@ -24,13 +24,9 @@ function Bola(context, teclado, x, y, raio,
     velocidade_max_y){
   this.context = context;
   this.teclado = teclado;
-  this.x = x;
-  this.y = y;
   this.raio = raio;
-  this.velocidade_x = velocidade_x;
-  this.velocidade_y = velocidade_y;
-  this.velocidade_max_x = velocidade_max_x;
-  this.velocidade_max_y = velocidade_max_y;
+  this.x = new Movimento(x, velocidade_x, velocidade_max_x);
+  this.y = new Movimento(y, velocidade_y, velocidade_max_y);
   this.largura_canvas = this.context.canvas.width;
   this.altura_canvas = this.context.canvas.height;
 };
@@ -38,61 +34,28 @@ function Bola(context, teclado, x, y, raio,
 Bola.prototype.atualizarVelocidades = function(){
   var teclado = this.teclado;
   var decorrido = this.animacao.decorrido() / 1000;
-
-  var incremento_x = Math.abs(this.velocidade_x * decorrido + 1/2 * (decorrido * decorrido));
-  var incremento_y = Math.abs(this.velocidade_y * decorrido + 1/2 * (decorrido * decorrido));
-
-  if(Math.abs(this.velocidade_x) < decorrido)
-    incremento_x = decorrido;
-  if(Math.abs(this.velocidade_y) < decorrido)
-    incremento_y = decorrido;
-
+  DIREITA = 1;
+  ESQUERDA = -1;
+  CIMA = -1;
+  BAIXO = 1;
 
   if(teclado.estaApertada(SETA_ESQUERDA) ||
   teclado.estaPressionada(SETA_ESQUERDA)){
-      this.velocidade_x -= incremento_x;
+      this.x.acelerar(ESQUERDA, decorrido);
   }
   if(teclado.estaApertada(SETA_DIREITA) ||
   teclado.estaPressionada(SETA_DIREITA)){
-      this.velocidade_x += incremento_x;
+      this.x.acelerar(DIREITA, decorrido);
   }
   if(teclado.estaApertada(SETA_ACIMA) ||
   teclado.estaPressionada(SETA_ACIMA)){
-      this.velocidade_y -= incremento_y;
+      this.y.acelerar(CIMA, decorrido);
   }
   if(teclado.estaApertada(SETA_ABAIXO) ||
   teclado.estaPressionada(SETA_ABAIXO)){
-      this.velocidade_y += incremento_y;
+      this.y.acelerar(BAIXO, decorrido);
   }
 
-  if(Math.abs(this.velocidade_x) > this.velocidade_max_x){
-    if(this.velocidade_x > 0){
-      sinal = 1;
-    }
-    else{
-      sinal = -1;
-    }
-    this.velocidade_x = sinal * this.velocidade_max_x;
-  }
-
-  if(Math.abs(this.velocidade_y) > this.velocidade_max_y){
-    if(this.velocidade_y > 0){
-      sinal = 1;
-    }
-    else{
-      sinal = -1;
-    }
-    this.velocidade_y = sinal * this.velocidade_max_y;
-  }
-
-
-  if(Math.abs(this.velocidade_x) < decorrido){
-    this.velocidade_x = 0;
-  }
-
-  if(Math.abs(this.velocidade_y) < decorrido){
-    this.velocidade_y = 0;
-  }
 };
 
 
@@ -105,31 +68,19 @@ Bola.prototype.atualizar = function(){
   var horizontal_superior = 0 + raio;
   var vertical_esquerda = 0 + raio;
 
-  this.x += this.velocidade_x;
-  this.y += this.velocidade_y;
-
-  if(this.x >= vertical_direita){
-    this.x = vertical_direita;
-    this.velocidade_x = - this.velocidade_x;
-  }
-  else if(this.x <= vertical_esquerda){
-    this.x = vertical_esquerda;
-    this.velocidade_x = - this.velocidade_x;
-  }
-
-  if(this.y >= horizontal_inferior){
-    this.y = horizontal_inferior;
-    this.velocidade_y = - this.velocidade_y;
-  }
-  else if(this.y <= vertical_esquerda){
-    this.y = vertical_esquerda;
-    this.velocidade_y = - this.velocidade_y;
-  }
+  this.x.atualizarPosicao();
+  this.y.atualizarPosicao();
+  this.x.colisaoSuperior(vertical_direita);
+  this.x.colisaoInferior(vertical_esquerda);
+  this.y.colisaoSuperior(horizontal_inferior);
+  this.y.colisaoInferior(horizontal_superior);
 };
 
 Bola.prototype.desenhar = function(){
   var ctx = this.context;
+  var x = this.x.posicao;
+  var y = this.y.posicao;
   ctx.beginPath();
-  ctx.arc(this.x, this.y, this.raio, 0, Math.PI * 2);
+  ctx.arc(x, y, this.raio, 0, Math.PI * 2);
   ctx.fill();
 };

@@ -31,11 +31,11 @@ $(function(){
   });
 
   $('#velocidade_max_x').change(function(e){
-    bola.velocidade_max_x = parseInt($(this).val());
+    bola.x.velocidade_max = parseInt($(this).val());
   });
 
   $('#velocidade_max_y').change(function(e){
-    bola.velocidade_max_y = parseInt($(this).val());
+    bola.y.velocidade_max = parseInt($(this).val());
   });
 
   $('#raio').change(function(e){
@@ -51,10 +51,10 @@ $(function(){
   }, 1000);
 
   setInterval(function(){
-    $('#velocidade_x').html(bola.velocidade_x);
+    $('#velocidade_x').html(bola.x.velocidade);
   }, 300);
 
   setInterval(function(){
-    $('#velocidade_y').html(bola.velocidade_y);
+    $('#velocidade_y').html(bola.y.velocidade);
   }, 300);
 });
